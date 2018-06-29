@@ -1,6 +1,6 @@
 # react-native-wifi-direct
 
-**_important_**: currently only android support realized
+**_IMPORTANT: currently only supports Android_**
 
 ## Installation
 
