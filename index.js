@@ -1,21 +1,48 @@
-import { NativeModules } from 'react-native';
+import { DeviceEventEmitter, NativeModules } from 'react-native';
 
-const WiFiP2PManager = NativeModules.WiFiP2PManagerModule;
+const WiFiDirectModule = NativeModules.WiFiDirectModule;
 
-const getAvailablePeers = () => new Promise((resolve, reject) => {
-  WiFiP2PManager.getAvailablePeersList(peersList => {
-    const peers = JSON.parse(peersList);
-    resolve(peers);
+const initialize = () => {
+  WiFiDirectModule.initialize()
+}
+
+const discoverPeers = () => {
+  return new Promise((resolve, reject) => {
+    WiFiDirectModule.discoverPeers((success) => {
+      resolve(success);
+    })
   })
-})
+}
 
-const connectTo = (deviceAddress) => new Promise((resolve, reject) => {
-  WiFiP2PManager.connect(deviceAddress, data => {
-    resolve(data);
+const connect = (deviceAddress) => {
+  return new Promise((resolve, reject) => {
+    WiFiDirectModule.connect(deviceAddress, (data) => {
+      resolve(data);
+    })
   })
-})
+}
 
-export {
-  getAvailablePeers,
-  connectTo
+const disconnect = () => {
+  return new Promise((resolve, reject) => {
+    WiFiDirectModule.disconnect((data) => {
+      resolve(data)
+    })
+  })
+}
+
+const addListener = (eventName, callback) => {
+  DeviceEventEmitter.addListener(`WIFI_DIRECT:${eventName}`, callback)
+}
+
+const removeListener = (eventName, callback) => {
+  DeviceEventEmitter.removeListener(`WIFI_DIRECT:${eventName}`, callback)
+}
+
+export default {
+  initialize,
+  discoverPeers,
+  connect,
+  disconnect,
+  addListener,
+  removeListener
 }

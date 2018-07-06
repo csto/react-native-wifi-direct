@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class WiFiP2PManagerPackage implements ReactPackage {
+public class WiFiDirectPackage implements ReactPackage {
     public List<Class<? extends JavaScriptModule>> createJSModules() {
         return Collections.emptyList();
     }
@@ -22,7 +22,7 @@ public class WiFiP2PManagerPackage implements ReactPackage {
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
 
-        modules.add(new WiFiP2PManagerModule(reactContext));
+        modules.add(new WiFiDirectModule(reactContext));
 
         return modules;
     }

@@ -1,11 +1,11 @@
 {
   "name": "react-native-wifi-direct",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.1.0",
+  "description": "A react native module for connecting and disconnecting from Android Wi-Fi Direct networks (p2p).",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Corey Stout",
   "license": "MIT"
 }
