@@ -34,6 +34,11 @@ public class WiFiDirectModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void initialize() {
+        // Only initialize once
+        if (manager != null) {
+            return;
+        }
+
        // Indicates a change in the Wi-Fi P2P status.
        intentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
 
