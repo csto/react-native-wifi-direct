@@ -76,6 +76,21 @@ public class WiFiDirectModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void stopPeerDiscovery(final Callback listener) {
+        manager.stopPeerDiscovery(channel, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                listener.invoke(true);
+            }
+
+            @Override
+            public void onFailure(int reasonCode) {
+                listener.invoke(false);
+            }
+        });
+    }
+
+    @ReactMethod
     public void connect(String deviceAddress, final Callback listener) {
         WifiP2pConfig config = new WifiP2pConfig();
         config.deviceAddress = deviceAddress;

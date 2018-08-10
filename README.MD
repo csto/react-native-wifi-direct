@@ -60,6 +60,17 @@ WifiDirect.discoverPeers().then((success) => {
 })
 ```
 
+If you need to stop peer discovery to do non Wi-Fi Direct scan, you can call `stopPeerDiscovery`.  Note that `discoverPeers` will stop on it's own if you connect to a Wi-Fi Direct network.
+```javascript
+WifiDirect.stopPeerDiscovery().then((success) => {
+  if (success) {
+    console.log("Peer discovery will stop.")
+  } else {
+    console.log("Peer discovery can not be stopped.")
+  }
+})
+```
+
 Register an event to listen for when devices are found.  This event will be called every time your device updates its network list.
 ```javascript
 componentWillMount () {
@@ -87,15 +98,15 @@ WifiDirect.connect(device.address).then((success) => {
 })
 ```
 
-The `CONNECTION_INFO_UDPATED` event is triggered when a connection is successfully established.
+The `CONNECTION_INFO_UPDATED` event is triggered when a connection is successfully established.
 ```javascript
 componentWillMount () {
-  WifiDirect.addListener('CONNECTION_INFO_UDPATED', this.connectionInfoUpdated)
+  WifiDirect.addListener('CONNECTION_INFO_UPDATED', this.connectionInfoUpdated)
 }
 
 // Don't forget to remove the listener to prevent a memory leak
 componentWillUnmount () {
-  WifiDirect.removeListener('CONNECTION_INFO_UDPATED', this.connectionInfoUpdated)
+  WifiDirect.removeListener('CONNECTION_INFO_UPDATED', this.connectionInfoUpdated)
 }
 
 connectionInfoUpdated = (event) => {

@@ -14,6 +14,14 @@ const discoverPeers = () => {
   })
 }
 
+const stopPeerDiscovery = () => {
+  return new Promise((resolve, reject) => {
+    WiFiDirectModule.stopPeerDiscovery((success) => {
+      resolve(success);
+    })
+  })
+}
+
 const connect = (deviceAddress) => {
   return new Promise((resolve, reject) => {
     WiFiDirectModule.connect(deviceAddress, (data) => {
@@ -41,6 +49,7 @@ const removeListener = (eventName, callback) => {
 export default {
   initialize,
   discoverPeers,
+  stopPeerDiscovery,
   connect,
   disconnect,
   addListener,
