@@ -1,5 +1,5 @@
 {
-  "name": "react-native-wifi-direct",
+  "name": "@viral-network/react-native-wifi-direct",
   "version": "0.2.3",
   "description": "A react native module for connecting and disconnecting from Android Wi-Fi Direct networks (p2p).",
   "main": "index.js",
@@ -7,9 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Corey Stout",
+  "contributors": [
+    "author": "Chris Dukakis <chrisdukakis@gmail.com>"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/csto/react-native-wifi-direct.git"
+    "url": "git://github.com/viral-network/react-native-wifi-direct.git"
   }
 }

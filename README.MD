@@ -27,7 +27,7 @@ import { PermissionsAndroid } from 'react-native'
 
 ...
 
-const permission = PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION
+const permission = PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
 const options = {
   'title': 'Wifi networks',
   'message': 'We need your permission in order to find wifi networks'
