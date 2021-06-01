@@ -7,9 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Corey Stout",
-  "contributors": [
+  "contributors": [{
     "author": "Chris Dukakis <chrisdukakis@gmail.com>"
-  ],
+  }],
   "license": "MIT",
   "repository": {
     "type": "git",
