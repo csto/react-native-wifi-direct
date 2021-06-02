@@ -246,18 +246,17 @@ public class WiFiDirectModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     private void discoverServices(final Promise promise) {
-        final Map<String, WritableMap> services = new HashMap();
-
         WifiP2pManager.DnsSdTxtRecordListener txtListener = new WifiP2pManager.DnsSdTxtRecordListener() {
             @Override
             public void onDnsSdTxtRecordAvailable(String fullDomain, Map record, WifiP2pDevice device) {
-                WritableMap service = services.get(device.deviceAddress);
-                if (service == null) {
-                    service = Arguments.createMap();
-                    services.put(device.deviceAddress, service);
-                }
-
-                service.putString("address", device.deviceAddress);
+                WritableMap service = Arguments.createMap();
+                service.putInt("status", device.status);
+                service.putString("primaryType", device.primaryDeviceType);
+                service.putString("secondaryType", device.secondaryDeviceType);
+                service.putString("deviceName", device.name);
+                service.putString("deviceAddress", device.deviceAddress);
+                service.putBoolean("isGroupOwner", device.isGroupOwner());
+                sercive.putString("fullDomain", fullDomain);
 
                 WritableMap record2 = Arguments.createMap();
                 Iterator<Map.Entry<String, String>> iterator = record.entrySet().iterator();
@@ -267,27 +266,24 @@ public class WiFiDirectModule extends ReactContextBaseJavaModule {
                 }
                 service.putMap("record", record2);
 
-                if (service.hasKey("instanceName")) {
-                    reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("WIFI_DIRECT:SERVICE_AVAILABLE", service);
-                }
+                reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("WIFI_DIRECT:DNS_SD_TEXT_RECORD", service);
             }
         };
 
         WifiP2pManager.DnsSdServiceResponseListener servListener = new WifiP2pManager.DnsSdServiceResponseListener() {
             @Override
             public void onDnsSdServiceAvailable(String instanceName, String registrationType, WifiP2pDevice device) {
-                WritableMap service = services.get(device.deviceAddress);
-                if (service == null) {
-                    service = Arguments.createMap();
-                    services.put(device.deviceAddress, service);
-                }
-                
+                WritableMap service = Arguments.createMap();
+                service.putInt("status", device.status);
+                service.putString("primaryType", device.primaryDeviceType);
+                service.putString("secondaryType", device.secondaryDeviceType);
+                service.putString("deviceName", device.name);
+                service.putString("deviceAddress", device.deviceAddress);
+                service.putBoolean("isGroupOwner", device.isGroupOwner());
                 service.putString("instanceName", instanceName);
                 service.putString("registrationType", registrationType);
 
-                if (service.hasKey("record")) {
-                    reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("WIFI_DIRECT:SERVICE_AVAILABLE", service);
-                }
+                reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("WIFI_DIRECT:DNS_SD_SERVICE", service);
             }
         };
 
