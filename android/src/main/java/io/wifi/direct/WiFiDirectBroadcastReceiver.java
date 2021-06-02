@@ -70,8 +70,8 @@ class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
                 params.putInt("status", device.status);
                 params.putString("primaryType", device.primaryDeviceType);
                 params.putString("secondaryType", device.secondaryDeviceType);
-                params.putString("device", device.deviceName);
-                params.putString("address", device.deviceAddress);
+                params.putString("deviceName", device.deviceName);
+                params.putString("deviceAddress", device.deviceAddress);
                 params.putBoolean("isGroupOwner", device.isGroupOwner());
                 array.pushMap(params);
             }
