@@ -248,7 +248,7 @@ public class WiFiDirectModule extends ReactContextBaseJavaModule {
     private void discoverServices(final Promise promise) {
         WifiP2pManager.DnsSdTxtRecordListener txtListener = new WifiP2pManager.DnsSdTxtRecordListener() {
             @Override
-            public void onDnsSdTxtRecordAvailable(String fullDomain, Map record, WifiP2pDevice device) {
+            public void onDnsSdTxtRecordAvailable(String fullDomainName, Map record, WifiP2pDevice device) {
                 WritableMap service = Arguments.createMap();
                 service.putInt("status", device.status);
                 service.putString("primaryType", device.primaryDeviceType);
@@ -256,7 +256,7 @@ public class WiFiDirectModule extends ReactContextBaseJavaModule {
                 service.putString("deviceName", device.name);
                 service.putString("deviceAddress", device.deviceAddress);
                 service.putBoolean("isGroupOwner", device.isGroupOwner());
-                sercive.putString("fullDomain", fullDomain);
+                sercive.putString("fullDomainName", fullDomainName);
 
                 WritableMap record2 = Arguments.createMap();
                 Iterator<Map.Entry<String, String>> iterator = record.entrySet().iterator();
