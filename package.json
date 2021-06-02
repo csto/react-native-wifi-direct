@@ -1,6 +1,6 @@
 {
   "name": "react-native-wifi-direct",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "A react native module for connecting and disconnecting from Android Wi-Fi Direct networks (p2p).",
   "main": "index.js",
   "scripts": {
