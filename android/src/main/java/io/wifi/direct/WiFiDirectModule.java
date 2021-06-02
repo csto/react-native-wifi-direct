@@ -253,10 +253,10 @@ public class WiFiDirectModule extends ReactContextBaseJavaModule {
                 service.putInt("status", device.status);
                 service.putString("primaryType", device.primaryDeviceType);
                 service.putString("secondaryType", device.secondaryDeviceType);
-                service.putString("deviceName", device.name);
+                service.putString("deviceName", device.deviceName);
                 service.putString("deviceAddress", device.deviceAddress);
                 service.putBoolean("isGroupOwner", device.isGroupOwner());
-                sercive.putString("fullDomainName", fullDomainName);
+                service.putString("fullDomainName", fullDomainName);
 
                 WritableMap record2 = Arguments.createMap();
                 Iterator<Map.Entry<String, String>> iterator = record.entrySet().iterator();
@@ -277,7 +277,7 @@ public class WiFiDirectModule extends ReactContextBaseJavaModule {
                 service.putInt("status", device.status);
                 service.putString("primaryType", device.primaryDeviceType);
                 service.putString("secondaryType", device.secondaryDeviceType);
-                service.putString("deviceName", device.name);
+                service.putString("deviceName", device.deviceName);
                 service.putString("deviceAddress", device.deviceAddress);
                 service.putBoolean("isGroupOwner", device.isGroupOwner());
                 service.putString("instanceName", instanceName);
