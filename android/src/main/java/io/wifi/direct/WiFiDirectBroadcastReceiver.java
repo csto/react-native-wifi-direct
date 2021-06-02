@@ -8,7 +8,8 @@ import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
-import android.support.annotation.Nullable;
+import android.net.wifi.p2p.WifiP2pGroup;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
@@ -55,7 +56,7 @@ class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
             }
 
         } else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)) {
-
+            manager.requestGroupInfo(channel, groupInfoListener);
         }
     }
 
@@ -66,8 +67,12 @@ class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
             for (WifiP2pDevice device : peerList.getDeviceList()) {
                 WritableMap params = Arguments.createMap();
-                params.putString("device", device.deviceName);
-                params.putString("address", device.deviceAddress);
+                params.putInt("status", device.status);
+                params.putString("primaryType", device.primaryDeviceType);
+                params.putString("secondaryType", device.secondaryDeviceType);
+                params.putString("deviceName", device.deviceName);
+                params.putString("deviceAddress", device.deviceAddress);
+                params.putBoolean("isGroupOwner", device.isGroupOwner());
                 array.pushMap(params);
             }
 
@@ -84,7 +89,42 @@ class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
             WritableMap params = Arguments.createMap();
             params.putString("address", groupOwnerAddress);
+            params.putBoolean("groupFormed", info.groupFormed);
+            params.putBoolean("isGroupOwner", info.isGroupOwner);
             sendEvent(reactContext, "WIFI_DIRECT:CONNECTION_INFO_UPDATED", params);
+        }
+    };
+
+    private WifiP2pManager.GroupInfoListener groupInfoListener = new WifiP2pManager.GroupInfoListener() {
+        @Override
+        public void onGroupInfoAvailable(WifiP2pGroup group) {
+            if (group != null) {
+                WritableMap params = Arguments.createMap();
+
+                if (group != null) {
+                    params.putString("interface", group.getInterface());
+                    params.putString("networkName", group.getNetworkName());
+                    params.putString("passphrase", group.getPassphrase());
+
+                    WifiP2pDevice groupOwner = group.getOwner();
+
+                    if (group.getOwner() != null) {
+                        WritableMap owner = Arguments.createMap();
+
+                        owner.putString("deviceAddress", groupOwner.deviceAddress);
+                        owner.putString("deviceName", groupOwner.deviceName);
+                        owner.putInt("status", groupOwner.status);
+                        owner.putString("primaryDeviceType", groupOwner.primaryDeviceType);
+                        owner.putString("secondaryDeviceType", groupOwner.secondaryDeviceType);
+
+                        params.putMap("owner", owner);
+                    } else {
+                        params.putNull("owner");
+                    }
+                }
+
+                sendEvent(reactContext, "WIFI_DIRECT:THIS_DEVICE_CHANGED", params);
+            }
         }
     };
 

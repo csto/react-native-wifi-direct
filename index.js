@@ -2,41 +2,27 @@ import { DeviceEventEmitter, NativeModules } from 'react-native';
 
 const WiFiDirectModule = NativeModules.WiFiDirectModule;
 
-const initialize = () => {
-  WiFiDirectModule.initialize()
-}
+const initialize = () => WiFiDirectModule.initialize()
 
-const discoverPeers = () => {
-  return new Promise((resolve, reject) => {
-    WiFiDirectModule.discoverPeers((success) => {
-      resolve(success);
-    })
-  })
-}
+const discoverPeers = () => WiFiDirectModule.discoverPeers()
 
-const stopPeerDiscovery = () => {
-  return new Promise((resolve, reject) => {
-    WiFiDirectModule.stopPeerDiscovery((success) => {
-      resolve(success);
-    })
-  })
-}
+const stopPeerDiscovery = () => WiFiDirectModule.stopPeerDiscovery()
 
-const connect = (deviceAddress) => {
-  return new Promise((resolve, reject) => {
-    WiFiDirectModule.connect(deviceAddress, (data) => {
-      resolve(data);
-    })
-  })
-}
+const connect = (deviceAddress) => WiFiDirectModule.connect(deviceAddress)
 
-const disconnect = () => {
-  return new Promise((resolve, reject) => {
-    WiFiDirectModule.disconnect((data) => {
-      resolve(data)
-    })
-  })
-}
+const connectWithIntent = (deviceAddress, intent) => WiFiDirectModule.connect(deviceAddress, intent)
+
+const disconnect = () => WiFiDirectModule.disconnect()  
+
+const createGroup = () => WiFiDirectModule.createGroup()
+
+const removeGroup = () => WiFiDirectModule.removeGroup()
+
+const getGroupInfo = () => WiFiDirectModule.getGroupInfo()
+
+const addLocalService = (record, name, type) => WiFiDirectModule.addLocalService(record, name, type)
+
+const discoverServices = () => WiFiDirectModule.discoverServices()
 
 const addListener = (eventName, callback) => {
   DeviceEventEmitter.addListener(`WIFI_DIRECT:${eventName}`, callback)
@@ -51,7 +37,13 @@ export default {
   discoverPeers,
   stopPeerDiscovery,
   connect,
+  connectWithIntent,
   disconnect,
+  createGroup,
+  removeGroup,
+  getGroupInfo,
+  addLocalService,
+  discoverServices,
   addListener,
-  removeListener
+  removeListener,
 }
